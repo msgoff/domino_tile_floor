@@ -68,13 +68,13 @@ def find_starting_location(grid):
   while not found_xy:
     x=randint(1,num_rows)
     y=randint(1,num_columns)
-    print("x="+str(x)+", y="+str(y))
+    #print("x="+str(x)+", y="+str(y))
     if (grid[x][y]==0):
       found_xy=True
   return x,y
   
 def find_next_location(grid,current_x,current_y):
-  print("finding next location")
+#  print("finding next location")
 #         north
 #  west  "value"  east
 #         south
@@ -84,11 +84,11 @@ def find_next_location(grid,current_x,current_y):
   north =grid[current_x-1][current_y]
   south =grid[current_x+1][current_y] # correct
   
-  print_grid(grid,num_rows)
-  print("north=              "+str(north))
-  print("west="+str(west)+", value="+str(grid[current_x][current_y])+", east="+str(east))
-  print("south=           "+str(south))
-  print(" ")
+#  print_grid(grid,num_rows)
+#  print("north=              "+str(north))
+#  print("west="+str(west)+", value="+str(grid[current_x][current_y])+", east="+str(east))
+#  print("south=           "+str(south))
+#  print(" ")
   no_remaining_choices=False
   #      0
   #   0  v  0
@@ -96,192 +96,201 @@ def find_next_location(grid,current_x,current_y):
   if ((north==0) and (south==0) and (east==0) and (west==0)):
     coin = randint(0,3)
     if (coin==0):
-      print("4 choices, 0")
+#      print("4 choices, 0") # south
       next_x=current_x+1
       next_y=current_y
     elif (coin==1):
-      print("4 choices, 1")
+#      print("4 choices, 1") # north
       next_x=current_x-1
       next_y=current_y
     elif (coin==2):
-      print("4 choices, 2")
+#      print("4 choices, 2") # east
       next_x=current_x
       next_y=current_y+1
     else: # (coin==3)
-      print("4 choices, 3")
+#      print("4 choices, 3") # west
       next_x=current_x
       next_y=current_y-1
     
   #   0  v  0
   #      0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((south==0) and (east==0) and (west==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("3 choices V, 0")
+#      print("3 choices V, 0") # south
       next_x=current_x+1
       next_y=current_y    
     elif (coin==1):
-      print("3 choices V, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices V, 1") # east
+      next_x=current_x
+      next_y=current_y+1
     else: #(coin==2):
-      print("3 choices V, 2")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices V, 2") # west
+      next_x=current_x
+      next_y=current_y-1
   #      0
   #   0  v  0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((north==0) and (east==0) and (west==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("3 choices ^, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices ^, 0") # north
+      next_x=current_x-1
+      next_y=current_y  
     elif (coin==1):
-      print("3 choices ^, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices ^, 1") # east
+      next_x=current_x
+      next_y=current_y+1
     else: #(coin==2):
-      print("3 choices ^, 2")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices ^, 2") # west
+      next_x=current_x
+      next_y=current_y-1
   #      0
   #   0  v
   #      0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((north==0) and (south==0) and (west==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("3 choices <, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices <, 0") # north
+      next_x=current_x-1
+      next_y=current_y
     elif (coin==1):
-      print("3 choices <, 1")
+#      print("3 choices <, 1") # south
       next_x=current_x+1
       next_y=current_y    
     else: #(coin==2):
-      print("3 choices <, 2")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices <, 2") # west
+      next_x=current_x
+      next_y=current_y-1
   #      0
   #      v  0
   #      0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((north==0) and (south==0) and (east==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("3 choices >, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices >, 0") # north
+      next_x=current_x-1
+      next_y=current_y
     elif (coin==1):
-      print("3 choices >, 1")
+#      print("3 choices >, 1") # south
       next_x=current_x+1
       next_y=current_y    
     else: #(coin==2):
-      print("3 choices >, 2")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("3 choices >, 2") # east
+      next_x=current_x
+      next_y=current_y+1
   #      0
   #      v
   #      0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((north==0) and (south==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("2 choices over/under, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices over/under, 0") # north
+      next_x=current_x-1
+      next_y=current_y
     else: #(coin==1):
-      print("2 choices over/under, 1")
+#      print("2 choices over/under, 1") # south
       next_x=current_x+1
       next_y=current_y    
   #   0  v  0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((east==0) and (west==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("2 choices side-by-side, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices side-by-side, 0") # east
+      next_x=current_x
+      next_y=current_y+1
     else: #(coin==1):
-      print("2 choices side-by-side, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices side-by-side, 1") # west
+      next_x=current_x
+      next_y=current_y-1
   #      0
   #   0  v 
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((north==0) and (west==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("2 choices upper-left, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices upper-left, 0") # north
+      next_x=current_x-1
+      next_y=current_y
     else: #(coin==1):
-      print("2 choices upper-left, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices upper-left, 1") # west
+      next_x=current_x
+      next_y=current_y-1
   #      0
   #      v  0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((north==0) and (east==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("2 choices upper-right, 0")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices upper-right, 0") # north
+      next_x=current_x-1
+      next_y=current_y
     else: #(coin==1):
-      print("2 choices upper-right, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices upper-right, 1") # east
+      next_x=current_x
+      next_y=current_y+1
   #   0  v 
   #      0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((south==0) and (west==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("2 choices lower-left, 0")
+#      print("2 choices lower-left, 0") # south
       next_x=current_x+1
       next_y=current_y    
     else: #(coin==1):
-      print("2 choices lower-left, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices lower-left, 1") # west
+      next_x=current_x
+      next_y=current_y-1
   #      v  0
   #      0
-  elif ((north==0) and (south==0) and (east==0) and (west==0)):
+  elif ((south==0) and (east==0)):
     coin = randint(0,2)
     if (coin==0):
-      print("2 choices lower-right, 0")
+#      print("2 choices lower-right, 0") # south
       next_x=current_x+1
       next_y=current_y    
     else: #(coin==1):
-      print("2 choices lower-right, 1")
-      next_x=current_x+1
-      next_y=current_y    
+#      print("2 choices lower-right, 1") # east
+      next_x=current_x
+      next_y=current_y+1
   elif (north==0):
-    print("1 choice, north")
-    next_x=current_x+1
+#    print("1 choice, north") # north
+    next_x=current_x-1
     next_y=current_y
   elif (south==0):
-    print("1 choice, south")
+#    print("1 choice, south") # south
     next_x=current_x+1
     next_y=current_y
   elif (east==0):
-    print("1 choice, east")
-    next_x=current_x+1
-    next_y=current_y
+#    print("1 choice, east") # east
+    next_x=current_x
+    next_y=current_y+1
   elif (west==0):
-    print("1 choice, west")
-    next_x=current_x+1
-    next_y=current_y
+#    print("1 choice, west") # west
+    next_x=current_x
+    next_y=current_y-1
   else:
     no_remaining_choices=True  
+    next_x=-1
+    next_y=-1
   
   return next_x,next_y,no_remaining_choices
 
+def are_there_zeros_on_grid(grid,num_rows,num_columns):
+  for indx in range(num_columns+2):
+    for jndx in range(num_rows+2):
+      if (grid[jndx][indx]==0):
+        return True
+  return False
+  
 # user defined variables
 # dimensions of two dimensional grid:
-num_rows = 6
-num_columns = 6
+num_rows = 10
+num_columns = 10
 
 # initialize variables    
 num_tries=0
 num_successes=0
 
-      
 while True: # search for random space-filling curves in the grid
+  num_tries+=1
   start_time = time.time()
 
   grid=create_grid_with_boundaries(num_rows,num_columns)
@@ -293,32 +302,52 @@ while True: # search for random space-filling curves in the grid
   grid[current_x][current_y]=value
   
   increment_head=True
+  change_value_by=1
   while increment_head:
     next_x,next_y,no_remaining_choices=find_next_location(grid,current_x,current_y)
     if no_remaining_choices:
       increment_head=False
-      print("no remaining locations for head")
+#      print("no remaining locations for head")
     else:
       value+=1
       grid[next_x][next_y]=value
-    wait = raw_input("    press enter to continue incrementing head")
+      current_x=next_x
+      current_y=next_y
+#    wait = raw_input("    press enter to continue incrementing head")
   
-  print("switching to tail exploration")  
-  increment_tail=True
+#  print("switching to tail exploration")  
   current_x=start_x
   current_y=start_y
   value=0  
+  increment_tail=True
+  change_value_by=-1
   while increment_tail:
     next_x,next_y,no_remaining_choices=find_next_location(grid,current_x,current_y)
     if no_remaining_choices:
       increment_tail=False
     else:
-      value-=1
+      value+=-1
       grid[next_x][next_y]=value
+      current_x=next_x
+      current_y=next_y
+#  print("no remaining tail locations")
   
+  if (num_tries%1000==0):
+    print(num_tries)
+  #if (are_there_zeros_on_grid(grid,num_rows,num_columns)):
+    #print("this snake does not fill the grid")
+    #print(num_tries)
+  if not are_there_zeros_on_grid(grid,num_rows,num_columns):
+    print("space-filling curve found!")  
+    print_grid(grid,num_rows)
+    num_successes+=1
+    print("number of tries: "+str(num_tries))
+    print("number of successes: "+str(num_successes))
+    print("elapsed time: "+str(elapsed_time)+" seconds")
+    wait = raw_input("    press enter to continue to next grid attempt")
+    
   elapsed_time = time.time() - start_time  
-  print("elapsed time: "+str(elapsed_time)+" seconds")
-  print("grid: ")
-  print_grid(grid,num_rows)
-  wait = raw_input("    press enter to continue to next grid attempt")
+#  print("grid: ")
+#  print_grid(grid,num_rows)
+#  wait = raw_input("    press enter to continue to next grid attempt")
 
