@@ -73,7 +73,7 @@ def find_starting_location(grid):
       found_xy=True
   return x,y
   
-def find_next_location(grid,current_x,current_y):
+def find_next_location(grid,current_x,current_y,watch_evolution):
 #  print("finding next location")
 #         north
 #  west  "value"  east
@@ -83,12 +83,12 @@ def find_next_location(grid,current_x,current_y):
   east=grid[current_x][current_y+1]
   north =grid[current_x-1][current_y]
   south =grid[current_x+1][current_y] # correct
-  
-#  print_grid(grid,num_rows)
-#  print("north=              "+str(north))
-#  print("west="+str(west)+", value="+str(grid[current_x][current_y])+", east="+str(east))
-#  print("south=           "+str(south))
-#  print(" ")
+  if (watch_evolution):  
+    print_grid(grid,num_rows)
+    print("north=              "+str(north))
+    print("west="+str(west)+", value="+str(grid[current_x][current_y])+", east="+str(east))
+    print("south=           "+str(south))
+    print(" ")
   no_remaining_choices=False
   #      0
   #   0  v  0
@@ -284,6 +284,7 @@ def are_there_zeros_on_grid(grid,num_rows,num_columns):
 # dimensions of two dimensional grid:
 num_rows = 10
 num_columns = 10
+watch_evolution=True
 
 # initialize variables    
 num_tries=0
@@ -304,25 +305,28 @@ while True: # search for random space-filling curves in the grid
   increment_head=True
   change_value_by=1
   while increment_head:
-    next_x,next_y,no_remaining_choices=find_next_location(grid,current_x,current_y)
+    next_x,next_y,no_remaining_choices=find_next_location(grid,current_x,current_y,watch_evolution)
     if no_remaining_choices:
       increment_head=False
-#      print("no remaining locations for head")
+      if (watch_evolution):
+        print("no remaining locations for head")
     else:
       value+=1
       grid[next_x][next_y]=value
       current_x=next_x
       current_y=next_y
-#    wait = raw_input("    press enter to continue incrementing head")
+    if (watch_evolution):  
+      wait = raw_input("    press enter to continue incrementing head")
   
-#  print("switching to tail exploration")  
+  if (watch_evolution):
+    print("switching to tail exploration")  
   current_x=start_x
   current_y=start_y
   value=0  
   increment_tail=True
   change_value_by=-1
   while increment_tail:
-    next_x,next_y,no_remaining_choices=find_next_location(grid,current_x,current_y)
+    next_x,next_y,no_remaining_choices=find_next_location(grid,current_x,current_y,watch_evolution)
     if no_remaining_choices:
       increment_tail=False
     else:
@@ -330,13 +334,15 @@ while True: # search for random space-filling curves in the grid
       grid[next_x][next_y]=value
       current_x=next_x
       current_y=next_y
-#  print("no remaining tail locations")
+  if (watch_evolution):
+    print("no remaining tail locations")
   
   if (num_tries%1000==0):
-    print(num_tries)
-  #if (are_there_zeros_on_grid(grid,num_rows,num_columns)):
-    #print("this snake does not fill the grid")
-    #print(num_tries)
+    print("num_tries="+str(num_tries))
+    
+  if (watch_evolution) and (are_there_zeros_on_grid(grid,num_rows,num_columns)):
+    print("this snake does not fill the grid")
+    print("num_tries="+str(num_tries))
   if not are_there_zeros_on_grid(grid,num_rows,num_columns):
     print("space-filling curve found!")  
     print_grid(grid,num_rows)
@@ -347,7 +353,8 @@ while True: # search for random space-filling curves in the grid
     wait = raw_input("    press enter to continue to next grid attempt")
     
   elapsed_time = time.time() - start_time  
-#  print("grid: ")
-#  print_grid(grid,num_rows)
-#  wait = raw_input("    press enter to continue to next grid attempt")
+  if (watch_evolution):
+    print("grid: ")
+    print_grid(grid,num_rows)
+    wait = raw_input("    press enter to continue to next grid attempt")
 
