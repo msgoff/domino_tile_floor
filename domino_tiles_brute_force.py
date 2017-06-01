@@ -282,17 +282,23 @@ def are_there_zeros_on_grid(grid,num_rows,num_columns):
   
 # user defined variables
 # dimensions of two dimensional grid:
-num_rows = 10
-num_columns = 10
-watch_evolution=True
+num_rows = 9
+num_columns = 9
+watch_evolution=False
+suppress_display=True
+output_max=100
 
 # initialize variables    
 num_tries=0
 num_successes=0
 
+f=open('results.dat','w')
+results_dic={}
+
+start_time_between_successes = time.time()
 while True: # search for random space-filling curves in the grid
   num_tries+=1
-  start_time = time.time()
+  start_time_this_iteration = time.time()
 
   grid=create_grid_with_boundaries(num_rows,num_columns)
   
@@ -337,24 +343,39 @@ while True: # search for random space-filling curves in the grid
   if (watch_evolution):
     print("no remaining tail locations")
   
-  if (num_tries%1000==0):
+  if (num_tries%1000==0 and not suppress_display):
     print("num_tries="+str(num_tries))
     
   if (watch_evolution) and (are_there_zeros_on_grid(grid,num_rows,num_columns)):
     print("this snake does not fill the grid")
     print("num_tries="+str(num_tries))
-  if not are_there_zeros_on_grid(grid,num_rows,num_columns):
-    print("space-filling curve found!")  
-    print_grid(grid,num_rows)
-    num_successes+=1
-    print("number of tries: "+str(num_tries))
-    print("number of successes: "+str(num_successes))
+    elapsed_time = time.time() - start_time_this_iteration     
     print("elapsed time: "+str(elapsed_time)+" seconds")
-    wait = raw_input("    press enter to continue to next grid attempt")
+  if not are_there_zeros_on_grid(grid,num_rows,num_columns):
+    if (not suppress_display):
+      print("space-filling curve found!")  
+      print_grid(grid,num_rows)
+    num_successes+=1
+    if (not suppress_display):
+      print("number of tries: "+str(num_tries))
+      print("number of successes: "+str(num_successes))
+    elapsed_time = time.time() - start_time_between_successes
+    if (not suppress_display):
+      print("elapsed time: "+str(elapsed_time)+" seconds")
+#    wait = raw_input("    press enter to continue to next grid attempt")
+    start_time_between_successes = time.time()
+    results_dic[num_successes]=[elapsed_time, num_tries]
+    print(str(num_successes)+": "+str(elapsed_time)+" seconds, "+str(num_tries)+" tries")
+    num_tries=0
+
+    if (num_successes==output_max):
+      for key,val in results_dic.iteritems():
+        print(str(val[0]) +" "+ str(val[1]))
+        f.write(str(val[0]) +" "+ str(val[1])+"\n")
+      f.close()
+      break
     
-  elapsed_time = time.time() - start_time  
   if (watch_evolution):
     print("grid: ")
     print_grid(grid,num_rows)
     wait = raw_input("    press enter to continue to next grid attempt")
-
