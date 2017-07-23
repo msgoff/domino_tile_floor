@@ -22,17 +22,22 @@ def print_list_of_transitions(list_of_transitions):
         list_of_transitions.append(new_list)
     return list_of_transitions
     
-def append_next_value(transition_dic,list_of_transitions):
+def append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill,print_status):
+    new_transition_list=[]
     for this_list in list_of_transitions:
+        if print_status: print("\nthis list = ")
+        if print_status: print(this_list)
         if (len(this_list)<(number_of_tiles_to_fill)): # if this list isn't "done"
             last_value=this_list[len(this_list)-1]
-            new_transition_list=[]
+            if print_status: print("last value = " + str(last_value))
             for next_value in transition_dic[last_value]:
+                if print_status: print("next value = "+str(next_value))
                 if next_value not in this_list:
+                    if print_status: print("adding next value to list")
                     new_list=list(this_list) # https://stackoverflow.com/questions/2612802/how-to-clone-or-copy-a-list
                     new_list.append(next_value)
+                    if print_status: print(new_list)
                     new_transition_list.append(new_list)
-#                    print(new_list)
     list_of_transitions=new_transition_list
     return list_of_transitions
 
@@ -46,16 +51,18 @@ starting_value=5
 
 list_of_transitions=[]
 
-print("seed")
+print_status=False
+
+if print_status: print("\nseed")
 this_transition=[5]
 list_of_transitions.append(this_transition)
-print_list_of_transitions(list_of_transitions)
+if print_status: 
+    print("list of transitions:")
+    print_list_of_transitions(list_of_transitions)
 
-print("step 1")
-list_of_transitions = append_next_value(transition_dic,list_of_transitions)
-print_list_of_transitions(list_of_transitions)
-
-print("step 2")
-list_of_transitions = append_next_value(transition_dic,list_of_transitions)
-print_list_of_transitions(list_of_transitions)
+for loop_indx in range(number_of_tiles_to_fill-1):
+    print("\nstep "+str(loop_indx))
+    list_of_transitions = append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill,print_status)
+    print("list of transitions:")
+    print_list_of_transitions(list_of_transitions)
 
