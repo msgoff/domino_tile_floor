@@ -1,6 +1,38 @@
 
 def create_transition_dic(width,height):
     transition_dic={}
+    num_tiles=width*height
+#    print("width= "+str(width))
+#    print("height= "+str(height))
+    for n in range(1,num_tiles+1):
+#        print("\nn = "+str(n))
+        adjacent_edges_list=[]
+#        print("if (n-1)%width !=0, then left exists; value is "+str((n-1)%width))
+        if ((n-1)%width != 0): 
+#            print("left = "+str(n-1))
+            adjacent_edges_list.append(n-1) # left
+#        print("if n%width !=0, then right exists; value is "+str(n%width))    
+        if (n%width     != 0): 
+#            print("right = "+str(n+1))
+            adjacent_edges_list.append(n+1) # right
+#        print("if n > width, then top exists")
+        if (n > width):
+#            print("top = "+str(n-width))
+            adjacent_edges_list.append(n-width) # top
+#        print("if n<=((width*height)-width), then bottom exists; value is "+str(    ((width*height)-width)))
+        if (n<=((width*height)-width)):
+#            print("bottom = "+str(n+width))
+            adjacent_edges_list.append(n+width) # bottom
+        transition_dic[n]=adjacent_edges_list
+    return transition_dic
+
+def print_transition_dic(transition_dic):
+    for key,value in transition_dic.iteritems():
+        print("start = "+str(key) +"; neighbors = "+ str(value))
+    
+
+def transition_2x3():
+    transition_dic={}
     transition_dic[1]=[2,4]
     transition_dic[2]=[1,5,3]
     transition_dic[3]=[2,6]
@@ -41,11 +73,12 @@ def append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill
     list_of_transitions=new_transition_list
     return list_of_transitions
 
-width=3
-height=2
+width=6
+height=6
 number_of_tiles_to_fill=width*height
 
 transition_dic = create_transition_dic(width,height)
+#print_transition_dic(transition_dic)
 
 starting_value=5
 
@@ -61,8 +94,11 @@ if print_status:
     print_list_of_transitions(list_of_transitions)
 
 for loop_indx in range(number_of_tiles_to_fill-1):
-    print("\nstep "+str(loop_indx))
+    print("\nstep "+str(loop_indx) + " of "+str(number_of_tiles_to_fill))
     list_of_transitions = append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill,print_status)
-    print("list of transitions:")
-    print_list_of_transitions(list_of_transitions)
+    print("number of searches = "+str(len(list_of_transitions)))
+#    print("list of transitions:")
+#    print_list_of_transitions(list_of_transitions)
+print("list of transitions:")
+print_list_of_transitions(list_of_transitions)
 
