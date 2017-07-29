@@ -1,3 +1,4 @@
+import random
 
 def create_transition_dic(width,height):
     transition_dic={}
@@ -29,18 +30,7 @@ def create_transition_dic(width,height):
 def print_transition_dic(transition_dic):
     for key,value in transition_dic.iteritems():
         print("start = "+str(key) +"; neighbors = "+ str(value))
-    return
-
-def transition_2x3():
-    transition_dic={}
-    transition_dic[1]=[2,4]
-    transition_dic[2]=[1,5,3]
-    transition_dic[3]=[2,6]
-    transition_dic[4]=[1,5]
-    transition_dic[5]=[4,2,6]
-    transition_dic[6]=[3,5]
-    return transition_dic
-
+    
 
 def print_list_of_transitions(list_of_transitions):
     for this_list in list_of_transitions:
@@ -66,14 +56,16 @@ def append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill
     list_of_transitions=new_transition_list
     return list_of_transitions
 
-width=6
-height=6
+width=7
+height=7
 starting_value=1
-
+max_to_search=100000
 number_of_tiles_to_fill=width*height
 
 transition_dic = create_transition_dic(width,height)
 #print_transition_dic(transition_dic)
+
+
 
 list_of_transitions=[]
 
@@ -90,6 +82,9 @@ for loop_indx in range(number_of_tiles_to_fill-1):
     print("\nstep "+str(loop_indx) + " of "+str(number_of_tiles_to_fill))
     list_of_transitions = append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill,print_status)
     print("number of searches = "+str(len(list_of_transitions)))
+    if (len(list_of_transitions)>max_to_search):
+        random.shuffle(list_of_transitions)
+        list_of_transitions=random.sample(list_of_transitions, max_to_search)
 #    print("list of transitions:")
 #    print_list_of_transitions(list_of_transitions)
 print("list of transitions:")
