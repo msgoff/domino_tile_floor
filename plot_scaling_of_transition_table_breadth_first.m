@@ -20,6 +20,9 @@ semilogy(five(:,1)./five(:,2),five(:,3),'DisplayName','5x5:1','marker','s','colo
 six=load('record_6x6_1.dat');
 semilogy(six(:,1)./six(:,2),six(:,3),'DisplayName','6x6:1','marker','d','color','b')
 
+seven=load('record_7x7_1.dat');
+semilogy(seven(:,1)./seven(:,2),seven(:,3),'DisplayName','7x7:1','marker','d','color','m')
+
 xlabel('normalized step number', "fontsize", 14)
 ylabel('number of snakes', "fontsize", 14)
 
