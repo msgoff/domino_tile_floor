@@ -90,3 +90,5 @@ for loop_indx in range(number_of_tiles_to_fill-1):
 print("list of transitions:")
 print_list_of_transitions(list_of_transitions)
 
+f.close()
+

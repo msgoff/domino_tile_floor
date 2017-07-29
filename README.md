@@ -1,7 +1,7 @@
 # domino_tile_floor
 completely cover a 2D grid with 2x1 domino tiles in a self-avoiding walk
 
-Threshold objective: find a single 200x200 grid in 24 hours without purchasing additional compute resources
+Threshold objective: find a single 200x200 grid that is indistinguishable from random in 24 hours without purchasing additional compute resources
 
 
 methods: 

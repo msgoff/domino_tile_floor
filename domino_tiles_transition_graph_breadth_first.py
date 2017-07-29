@@ -66,8 +66,8 @@ def append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill
     list_of_transitions=new_transition_list
     return list_of_transitions
 
-width=6
-height=6
+width=7
+height=7
 starting_value=1
 
 number_of_tiles_to_fill=width*height
@@ -78,6 +78,8 @@ transition_dic = create_transition_dic(width,height)
 list_of_transitions=[]
 
 print_status=False
+
+f=open('record_'+str(width)+'x'+str(height)+'_'+str(starting_value)+'.dat','w')
 
 if print_status: print("\nseed:")
 this_transition=[starting_value]
@@ -90,8 +92,10 @@ for loop_indx in range(number_of_tiles_to_fill-1):
     print("\nstep "+str(loop_indx) + " of "+str(number_of_tiles_to_fill))
     list_of_transitions = append_next_value(transition_dic,list_of_transitions,number_of_tiles_to_fill,print_status)
     print("number of searches = "+str(len(list_of_transitions)))
+    f.write(str(loop_indx+1)+" "+str(number_of_tiles_to_fill)+" "+str(len(list_of_transitions))+"\n")
 #    print("list of transitions:")
 #    print_list_of_transitions(list_of_transitions)
 print("list of transitions:")
 print_list_of_transitions(list_of_transitions)
 
+f.close()
