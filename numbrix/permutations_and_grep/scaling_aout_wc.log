@@ -1,0 +1,56 @@
+$ date; time ./a.out 5 | wc -l; date
+Sat Aug  5 12:38:08 EDT 2017
+     120
+
+real	0m0.008s
+user	0m0.004s
+sys	0m0.004s
+Sat Aug  5 12:38:08 EDT 2017
+$ date; time ./a.out 6 | wc -l; date
+Sat Aug  5 12:38:35 EDT 2017
+     720
+
+real	0m0.009s
+user	0m0.005s
+sys	0m0.004s
+Sat Aug  5 12:38:35 EDT 2017
+$ date; time ./a.out 7 | wc -l; date
+Sat Aug  5 12:38:40 EDT 2017
+    5040
+
+real	0m0.016s
+user	0m0.013s
+sys	0m0.004s
+Sat Aug  5 12:38:40 EDT 2017
+$ date; time ./a.out 8 | wc -l; date
+Sat Aug  5 12:38:44 EDT 2017
+   40320
+
+real	0m0.092s
+user	0m0.088s
+sys	0m0.005s
+Sat Aug  5 12:38:44 EDT 2017
+$ date; time ./a.out 9 | wc -l; date
+Sat Aug  5 12:38:48 EDT 2017
+  362880
+
+real	0m0.813s
+user	0m0.803s
+sys	0m0.010s
+Sat Aug  5 12:38:49 EDT 2017
+$ date; time ./a.out 10 | wc -l; date
+Sat Aug  5 12:38:52 EDT 2017
+ 3628800
+
+real	0m8.128s
+user	0m8.061s
+sys	0m0.099s
+Sat Aug  5 12:39:00 EDT 2017
+$ date; time ./a.out 11 | wc -l; date
+Sat Aug  5 12:39:04 EDT 2017
+ 39916800
+
+real	1m16.460s
+user	1m17.091s
+sys	0m1.055s
+Sat Aug  5 12:40:21 EDT 2017
