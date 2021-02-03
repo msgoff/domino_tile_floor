@@ -20,8 +20,8 @@ def create_transition_dic(width, height):
 
 
 dct = create_transition_dic(width,width)
-keep = set()
-seen = set()
+#keep = set()
+#seen = set()
 
 src = [1]
 #https://docs.python.org/3/library/collections.html#collections.deque
@@ -30,9 +30,9 @@ from collections import deque
 
 d = deque()
 def product_gen(src):
-    if tuple(src) in seen:
-        return 
-    seen.add(tuple(src))
+    #if tuple(src) in seen:
+    #    return 
+    #seen.add(tuple(src))
     l = src[:-1]
     for ix in product([src[-1]],dct[src[-1]]):
         try:
@@ -43,15 +43,20 @@ def product_gen(src):
         except Exception as e:
             print(e)
             pass
-        
+
+solutions = set()
 product_gen(src)
 neighbors = {2:'X',3:'Y',4:'Z'}
 while d:
     tpl = d.popleft()
-    product_gen(list(tpl))
+    if len(tpl) == width**2:
+        solutions.add(tpl)
+    else:
+        product_gen(list(tpl))
+
 moves = {}
 square_type = []
-for tpl in sorted(seen):
+for tpl in sorted(solutions):
     if len(tpl) == width**2:
         tmp_lst = []
     
