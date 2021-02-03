@@ -42,15 +42,31 @@ def product_gen(src):
             pass
         
 product_gen(src)
-
+neighbors = {2:'X',3:'Y',4:'Z'}
 while len(keep) > len(seen):
     s = keep.copy()
     for tpl in s:
         product_gen(list(tpl))
-
+moves = {}
+square_type = []
 for tpl in sorted(keep):
     if len(tpl) == width**2:
-        print(tpl)
+        tmp_lst = []
+    
+        for ix in list(zip(tpl,tpl[1:])):
+            if ix[1] - 1 == ix[0]:
+                tmp_lst.append('R')
 
+            if ix[1] + 1 == ix[0]:
+                tmp_lst.append('L')
 
-print("my claim is that every other solution can be derived from the solutions of starting at 1. Rotations, reflections, split/reverse")
+            if ix[1] - width == ix[0]:
+                tmp_lst.append('D')
+
+            if ix[1] + width == ix[0]:
+                tmp_lst.append('U')
+    
+        moves[tpl] = (tmp_lst,[neighbors[len(dct[x])] for x in tpl])
+
+for k,v in moves.items():
+    print(k,v)
