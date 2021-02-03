@@ -24,8 +24,11 @@ keep = set()
 seen = set()
 
 src = [1]
+#https://docs.python.org/3/library/collections.html#collections.deque
+from collections import deque
 
 
+d = deque()
 def product_gen(src):
     if tuple(src) in seen:
         return 
@@ -35,7 +38,7 @@ def product_gen(src):
         try:
             l.extend(list(ix))
             if len(set(l)) == len(l):
-                keep.add(tuple(l))
+                d.append(tuple(l))
             l = src[:-1]
         except Exception as e:
             print(e)
@@ -43,13 +46,12 @@ def product_gen(src):
         
 product_gen(src)
 neighbors = {2:'X',3:'Y',4:'Z'}
-while len(keep) > len(seen):
-    s = keep.copy()
-    for tpl in s:
-        product_gen(list(tpl))
+while d:
+    tpl = d.popleft()
+    product_gen(list(tpl))
 moves = {}
 square_type = []
-for tpl in sorted(keep):
+for tpl in sorted(seen):
     if len(tpl) == width**2:
         tmp_lst = []
     
@@ -68,5 +70,8 @@ for tpl in sorted(keep):
     
         moves[tpl] = (tmp_lst,[neighbors[len(dct[x])] for x in tpl])
 
+counter = 0
 for k,v in moves.items():
+    #if counter < 5 :
+    counter += 1
     print(k,v)
