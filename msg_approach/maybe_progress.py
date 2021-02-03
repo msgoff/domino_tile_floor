@@ -21,7 +21,7 @@ def create_transition_dic(width, height):
         transition_dic[n] = adjacent_edges_list
     return transition_dic
 
-
+# useage python maybe_progress.py 3 for 3X3 starting at 1
 # choose starting point of 1
 # estimated number of valid paths
 # https://oeis.org/A145157
@@ -45,11 +45,9 @@ n=15, 225419381425094248494363948728158
 
 
 dct = create_transition_dic(width, width)
-src = [1]
 solutions = set()
 neighbors = {2: "X", 3: "Y", 4: "Z"}
 moves = {}
-
 # https://docs.python.org/3/library/collections.html#collections.deque
 d = deque()
 
@@ -64,9 +62,8 @@ def product_gen(src):
             l = src[:-1]
         except Exception as e:
             print(e)
-            pass
 
-
+src = [1]
 product_gen(src)
 while d:
     tpl = d.popleft()
