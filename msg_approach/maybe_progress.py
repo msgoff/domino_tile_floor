@@ -99,7 +99,6 @@ import pandas as pd
 df = pd.DataFrame(sorted(solutions))
 number_of_solutions = len(df.index.tolist())
 for ix,xs in enumerate(df.columns.tolist()):
-    if ix:
-        lst = list(range(ix))
+        lst = list(range(ix+1))
         for k,v in df.loc[:,lst].groupby(lst).size().to_dict().items():
             print(k,round(1.0*v/number_of_solutions,ndigits=5))
