@@ -4,7 +4,7 @@ from collections import deque
 
 width = int(argv[1])
 """
-The search space can be reduced considerably by stopping at the point where there is only one solution.
+The search space can be reduced by stopping when there is only one solution.
 in the 3x3 case 
 
 the solutions are 
