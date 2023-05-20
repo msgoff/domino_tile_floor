@@ -18,7 +18,7 @@ the solutions are
 (1, 4, 7, 8, 9, 6, 5, 2, 3) (['D', 'D', 'R', 'R', 'U', 'L', 'U', 'R'], ['X', 'Y', 'X', 'Y', 'X', 'Y', 'Z', 'Y', 'X'])
 
 initially we can start by only exploring the case where 1 -> 2
-the case where 1->4 can be derived from all of the solutions from 1 -> 2... by substituing R -> D, L -> U
+the case where 1->4 can be derived from all of the solutions from 1 -> 2... by substituting R -> D, L -> U
 so the search space is reduced by 50%
 
 only considering the 4 cases
