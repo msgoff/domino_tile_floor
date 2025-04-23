@@ -71,3 +71,8 @@ for line in output:
     f.write(line)
     f.write("\n")
 f.close()
+
+import pickle
+
+with open("transitions.pickle", "wb") as f:
+    pickle.dump(transition_dic_inverse, f)
