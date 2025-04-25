@@ -13,19 +13,25 @@
 # to get additional solutions you can invert the output from z3 add it to the cnf and re-run z3 on the cnf file
 # to get all solutions, repeat until UNSAT
 
-
+from time import sleep
 from itertools import product
+from itertools import combinations
+import pandas as pd
+from collections import defaultdict
+from pudb import set_trace
 
 id_transition = {}
-transition_dic_inverse = {}
+transition_dict_inverse = {}
 output = []
 seen = set()
-width = 2
+width = 4
+square_to_pairs = defaultdict(list)
+rules = []
 
 
-def create_transition_dic(width, height):
+def create_transition_dict(width, height):
     counter = 1
-    transition_dic = {}
+    transition_dict = {}
     num_tiles = width * height
     for n in range(1, num_tiles + 1):
         adjacent_edges_list = []
@@ -37,36 +43,63 @@ def create_transition_dic(width, height):
             adjacent_edges_list.append(n - width)  # top
         if n <= ((width * height) - width):
             adjacent_edges_list.append(n + width)  # bottom
-        transition_dic[n] = adjacent_edges_list
+        transition_dict[n] = adjacent_edges_list
         for ix, tpl in enumerate(list(product([n], adjacent_edges_list))):
+            square_to_pairs[n].append(tpl)
             id_transition[counter] = tpl
-            transition_dic_inverse[tpl] = counter
+            transition_dict_inverse[tpl] = counter
             counter += 1
-    return transition_dic
+    return transition_dict
 
 
-dct = create_transition_dic(width, width)
-for k, v in dct.items():
+transition_dict = create_transition_dict(width, width)
+rows = []
+rule_count = 0
+for k, v in square_to_pairs.items():
+    # print(k,v)
     lst = list(product([k], v))
-    resp = [transition_dic_inverse.get(tpl) for tpl in lst]
-    resp.append(0)
-    output.append(tuple(resp))
-    output.append(tuple([-1 * x for x in resp]))
-    for item in lst:
-        q1 = transition_dic_inverse.get(item)
-        q2 = transition_dic_inverse.get(tuple([item[1], item[0]]))
-        if (q1, q2) not in seen:
-            seen.add((q1, q2))
-            seen.add((q2, q1))
-            output.append((-1 * q1, -1 * q2, 0))
+    for l in lst:
+        l_temp = list(l)
+        l_temp.append(f"r{rule_count}")
+        l_temp.append(transition_dict_inverse.get(l[1]))
+        rows.append(l_temp)
+        rule_count += 1
+df = pd.DataFrame(rows)
+df.columns = ["square", "transition", "rule", "rule_id"]
+df["q0"] = df.transition.apply(lambda x: x[0])
+df["q1"] = df.transition.apply(lambda x: x[1])
+zf0 = df.groupby("q0").apply(lambda x: x["rule_id"])
+zf1 = df.groupby("q1").apply(lambda x: x["rule_id"])
+output = []
+for ix in range(1, width * width + 1):
+    lst = zf0[ix].tolist()
+    output.append(lst)
+    lst1 = zf1[ix].tolist()
+    output.append(lst1)
+    # neg
+    for l in list(combinations(lst, 2)):
+        output.append([-1 * x for x in l])
+    for l in list(combinations(lst1, 2)):
+        output.append([-1 * x for x in l])
 
-print(transition_dic_inverse)
-variable_count = len(transition_dic_inverse.keys())
-clause_count = len(output)
+for tpl in df["transition"].tolist():
+    lst = df[
+        (df["transition"] == tpl) | (df["transition"] == (tpl[1], tpl[0]))
+    ].rule_id.tolist()
+    output.append([-1 * x for x in lst])
+
+
+print(df)
+rules = []
+for rule in output:
+    rules.append(str(rule).replace("[", "").replace("]", "").replace(",", "") + " 0")
+# print(transition_dic_inverse)
+variable_count = len(transition_dict_inverse.keys())
+clause_count = len(rules)
 f = open("output.cnf", "w")
 f.write(f"p cnf {variable_count} {clause_count}")
 f.write("\n")
-for line in output:
+for line in rules:
     line = str(line).replace("(", "").replace(")", "").replace(",", "")
     f.write(line)
     f.write("\n")
@@ -75,4 +108,4 @@ f.close()
 import pickle
 
 with open("transitions.pickle", "wb") as f:
-    pickle.dump(transition_dic_inverse, f)
+    pickle.dump(transition_dict_inverse, f)

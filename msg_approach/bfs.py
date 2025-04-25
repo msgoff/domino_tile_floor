@@ -42,7 +42,7 @@ while seen:
                 seen.add(tuple(lst))
     for ix in c:
         seen.discard(ix)
-        if len(ix) >= width ** 2:
+        if len(ix) >= width**2:
             print("solution:", ix, "\n")
             solutions.add(ix)
             # print(solutions)
